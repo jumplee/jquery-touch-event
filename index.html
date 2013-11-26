@@ -10,6 +10,12 @@
       width:300px;
       height:200px;
     }
+     .area2{
+      background:#cccccc;
+      border:1px solid yellow;
+      width:300px;
+      height:200px;
+    }
   </style>
 </head>
 <body>
@@ -17,11 +23,28 @@
 touch 我
 </div>
 
+<button onclick="add(this)">添加一个div</button>
 	<script type="text/javascript" src="jquery-2.0.3.js"></script>
   <script type="text/javascript" src="touch.js"></script>
   <script type="text/javascript">
+  function add(ele){
+    $(ele).before('<div class="area2">新添加的div</div>');
+    //$(".area").trigger("swipeDown");
+  }
     $(".area").on("tap",function(){
-      alert(this.innerHTML);
+      alert("tap事件");
+    });
+       $(".area").on("swipeUp",function(){
+      alert("swipeUp 事件");
+    });
+       $(".area").on("swipeDown",function(){
+      alert("swipeDown 事件");
+    });
+      $("body").on("doubleTap",".area2",function(){
+      alert("tap 事件");
+    });
+      $("body").on("swipeDown",".area2",function(){
+      alert("swipeDown 事件");
     });
   </script>
 </body>

@@ -57,15 +57,16 @@
         }
       })
       .on('touchstart MSPointerDown', function(e){
+      if(!e.originalEvent.touches){return false};
         if(e.type == 'MSPointerDown' && !isPrimaryTouch(e)) return;
-        firstTouch = e.type == 'MSPointerDown' ? e : e.touches[0]
-        now = Date.now()
-        delta = now - (touch.last || now)
+        firstTouch = e.type == 'MSPointerDown' ? e : e.originalEvent.touches[0];
+        now = Date.now();
+        delta = now - (touch.last || now);
         touch.el = $('tagName' in firstTouch.target ?
-          firstTouch.target : firstTouch.target.parentNode)
-        touchTimeout && clearTimeout(touchTimeout)
-        touch.x1 = firstTouch.pageX
-        touch.y1 = firstTouch.pageY
+          firstTouch.target : firstTouch.target.parentNode);
+        touchTimeout && clearTimeout(touchTimeout);
+        touch.x1 = firstTouch.pageX;
+        touch.y1 = firstTouch.pageY;
         if (delta > 0 && delta <= 250) touch.isDoubleTap = true
         touch.last = now
         longTapTimeout = setTimeout(longTap, longTapDelay)
@@ -73,14 +74,16 @@
         if (gesture && e.type == 'MSPointerDown') gesture.addPointer(e.pointerId);
       })
       .on('touchmove MSPointerMove', function(e){
+      if(!e.originalEvent.touches){return false};
         if(e.type == 'MSPointerMove' && !isPrimaryTouch(e)) return;
-        firstTouch = e.type == 'MSPointerMove' ? e : e.touches[0]
-        cancelLongTap()
-        touch.x2 = firstTouch.pageX
-        touch.y2 = firstTouch.pageY
+        firstTouch = e.type == 'MSPointerMove' ? e : e.originalEvent.touches[0];
+        cancelLongTap();
+        touch.x2 = firstTouch.pageX;
+        touch.y2 = firstTouch.pageY;
 
-        deltaX += Math.abs(touch.x1 - touch.x2)
-        deltaY += Math.abs(touch.y1 - touch.y2)
+        deltaX += Math.abs(touch.x1 - touch.x2);
+        deltaY += Math.abs(touch.y1 - touch.y2);
+        e.preventDefault();
       })
       .on('touchend MSPointerUp', function(e){
         if(e.type == 'MSPointerUp' && !isPrimaryTouch(e)) return;
